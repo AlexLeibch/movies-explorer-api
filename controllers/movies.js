@@ -31,17 +31,19 @@ const createMovie = (req, res, next) => {
 };
 
 const deleteMovie = (req, res, next) => {
-  Movie.findByIdAndRemove({ owner: req.user._id, _id: req.params.movieId })
+  Movie.findById(req.params.movieId)
     .then((movie) => {
-      if (!movie) {
-        throw NotFoundError('У пользователя нет фильма с таким id');
+      if (!movie || movie.owner.toString() !== req.user_id) {
+        throw new NotFoundError('У пользователя нет фильма с таким id');
       }
-      return res.status(200).send({ message: 'Фильм удалён' });
+      Movie.findByIdAndDelete(req.params.movieId)
+        .then(() => {
+          res.send({ message: 'фильм удалён' });
+        }).catch(next);
     }).catch((err) => {
       if (err.name === 'CastError') {
-        throw new BadRequestError('Неверные данные');
+        throw BadRequestError('Данные не прошли валидацию');
       }
-      throw err;
     }).catch(next);
 };
 
