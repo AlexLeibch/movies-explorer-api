@@ -12,7 +12,7 @@ const { login, createUser } = require('./controllers/users');
 const { auth } = require('./middlewares/auth');
 const { errorLogger, requestLogger } = require('./middlewares/logger');
 
-const { PORT = 3001, DB_ADRESS = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
+const { PORT = 3000, DB_ADRESS = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
 
 const app = express();
 app.use(helmet());
@@ -24,10 +24,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const options = {
   origin: [
     'http://localhost:3000',
-    'http://topmestobyalex.nomoredomains.xyz',
-    'https://topmestobyalex.nomoredomains.xyz',
-    'http://api.topmestobyalex.nomoredomains.rocks',
-    'https://api.topmestobyalex.nomoredomains.rocks',
+    'http://api.alex.movies-explorer.nomoredomains.rocks',
+    'https://api.alex.movies-explorer.nomoredomains.rocks',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
