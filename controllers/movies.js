@@ -4,7 +4,8 @@ const NotFoundError = require('../errors/not-found-error');
 
 const createMovie = (req, res, next) => {
   const {
-    country, director, duration, year, description, image, trailer, thumbnail, nameRU, nameEN,
+    country, director, duration, year, description, image, trailer, movieId,
+    thumbnail, nameRU, nameEN,
   } = req.body;
   const owner = req.user._id;
 
@@ -19,7 +20,7 @@ const createMovie = (req, res, next) => {
     thumbnail,
     owner,
     nameRU,
-    // movieId
+    movieId,
     nameEN,
   }).then((movie) => {
     res.status(200).send({ data: movie });
