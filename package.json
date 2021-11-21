@@ -32,6 +32,8 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
     "express": "^4.17.1",
+    "express-limiter": "^1.6.1",
+    "express-rate-limit": "^5.5.1",
     "express-winston": "^4.2.0",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",

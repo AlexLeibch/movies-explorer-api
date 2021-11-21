@@ -11,8 +11,9 @@ const movieRouters = require('./routes/movies');
 const { login, createUser } = require('./controllers/users');
 const { auth } = require('./middlewares/auth');
 const { errorLogger, requestLogger } = require('./middlewares/logger');
+const limiter = require('./middlewares/limiter');
 
-const { PORT = 3000, DB_ADRESS = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
+const { PORT = 3001, DB_ADRESS = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
 
 const app = express();
 app.use(helmet());
@@ -37,6 +38,8 @@ const options = {
 app.use('*', cors(options));
 
 app.use(requestLogger);
+
+app.use(limiter);
 
 app.post('/signup', celebrate({
   body: Joi.object().keys({
