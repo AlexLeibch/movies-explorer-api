@@ -34,7 +34,7 @@ const createMovie = (req, res, next) => {
 const deleteMovie = (req, res, next) => {
   Movie.findById(req.params.movieId)
     .then((movie) => {
-      if (!movie || movie.owner.toString() !== req.user_id) {
+      if (!movie || movie.owner.toString() !== req.user._id) {
         throw new NotFoundError('У пользователя нет фильма с таким id');
       }
       Movie.findByIdAndDelete(req.params.movieId)
@@ -43,8 +43,10 @@ const deleteMovie = (req, res, next) => {
         }).catch(next);
     }).catch((err) => {
       if (err.name === 'CastError') {
-        throw BadRequestError('Данные не прошли валидацию');
+        console.log(err.message)
+        throw new BadRequestError('Данные не прошли валидацию');
       }
+      throw err;
     }).catch(next);
 };
 

@@ -12,19 +12,19 @@ movieRouters.post('/movies', celebrate({
     year: Joi.string().required(),
     description: Joi.string().required(),
     image: Joi.string().required().custom((value, helpers) => {
-      if (validator.isUrl(value)) {
+      if (validator.isURL(value)) {
         return value;
       }
       return helpers.message('Поле должно быть ссылкой');
     }),
     trailer: Joi.string().required().custom((value, helpers) => {
-      if (validator.isUrl(value)) {
+      if (validator.isURL(value)) {
         return value;
       }
       return helpers.message('Поле должно быть ссылкой');
     }),
     thumbnail: Joi.string().required().custom((value, helpers) => {
-      if (validator.isUrl(value)) {
+      if (validator.isURL(value)) {
         return value;
       }
       return helpers.message('Поле должно быть ссылкой');
@@ -40,7 +40,7 @@ movieRouters.get('/movies', getMovies);
 movieRouters.delete('/movies/:movieId', celebrate({
   body: Joi.object().keys({
     params: Joi.object().keys({
-      movieId: Joi.string().length(24).hex(),
+      movieId: Joi.string().hex(),
     }),
   }),
 }), deleteMovie);

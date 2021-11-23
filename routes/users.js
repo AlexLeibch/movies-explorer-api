@@ -5,7 +5,7 @@ const {
 } = require('../controllers/users');
 
 usersRouter.get('/users/me', getMe);
-usersRouter.put('/users/me', celebrate({
+usersRouter.patch('/users/me', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     email: Joi.string().required().email(),
