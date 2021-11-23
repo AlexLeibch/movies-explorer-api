@@ -13,6 +13,7 @@ const router = require('./routes/index');
 const { PORT = 3001, DB_ADRESS = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
 
 const app = express();
+app.use(limiter);
 app.use(helmet());
 
 mongoose.connect(DB_ADRESS);
@@ -36,8 +37,6 @@ app.use('*', cors(options));
 
 app.use(requestLogger);
 
-app.use(limiter);
-
 app.use(auth);
 
 app.use(router);
@@ -46,7 +45,7 @@ app.use(errorLogger);
 app.use(errors());
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
-  res.status(statusCode).send({ message: statusCode === 500 ? message : message });
+  res.status(statusCode).send({ message: statusCode === 500 ? "произошла ошибка на сервере" : message });
   next();
 });
 

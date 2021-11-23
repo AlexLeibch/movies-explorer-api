@@ -55,10 +55,7 @@ const createUser = (req, res, next) => {
       if (err.name === 'ValidationError') {
         throw new BadRequestError('Неверно указаны данные');
       }
-      if (err.code === '11000') {
-        throw new ConflictError('Такая почта уже зарегестрирована');
-      }
-      throw err;
+      throw new ConflictError('Такая почта уже зарегестрирована');
     })
     .catch(next);
 };
