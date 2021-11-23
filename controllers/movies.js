@@ -1,6 +1,7 @@
 const Movie = require('../models/movie');
 const BadRequestError = require('../errors/bad-request-error');
 const NotFoundError = require('../errors/not-found-error');
+const ForbiddenError = require('../errors/forbidden');
 
 const createMovie = (req, res, next) => {
   const {
@@ -43,10 +44,9 @@ const deleteMovie = (req, res, next) => {
         }).catch(next);
     }).catch((err) => {
       if (err.name === 'CastError') {
-        console.log(err.message)
         throw new BadRequestError('Данные не прошли валидацию');
       }
-      throw err;
+      throw new ForbiddenError('Нельзя удалить чужой фильм');
     }).catch(next);
 };
 

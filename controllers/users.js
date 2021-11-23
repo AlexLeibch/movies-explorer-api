@@ -55,9 +55,10 @@ const createUser = (req, res, next) => {
       if (err.name === 'ValidationError') {
         throw new BadRequestError('Неверно указаны данные');
       }
-      if (err.name === 'MongoError' || err.code === '11000') {
+      if (err.code === '11000') {
         throw new ConflictError('Такая почта уже зарегестрирована');
       }
+      throw err;
     })
     .catch(next);
 };

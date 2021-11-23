@@ -2,16 +2,13 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
-const validator = require('validator');
 const helmet = require('helmet');
 const cors = require('cors');
-const { Joi, celebrate, errors } = require('celebrate');
-const usersRouter = require('./routes/users');
-const movieRouters = require('./routes/movies');
-const { login, createUser } = require('./controllers/users');
+const { errors } = require('celebrate');
 const { auth } = require('./middlewares/auth');
 const { errorLogger, requestLogger } = require('./middlewares/logger');
 const limiter = require('./middlewares/limiter');
+const router = require('./routes/index');
 
 const { PORT = 3001, DB_ADRESS = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
 
@@ -41,33 +38,9 @@ app.use(requestLogger);
 
 app.use(limiter);
 
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    email: Joi.string().required().custom((value, helpers) => {
-      if (validator.isEmail(value)) {
-        return value;
-      }
-      return helpers.message('Email в некорректном формате');
-    }),
-    password: Joi.string().required(),
-  }),
-}), createUser);
-
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }),
-}), login);
-
 app.use(auth);
-app.use('/', usersRouter);
-app.use('/', movieRouters);
 
-app.use('*', (req, res, next) => {
-  next(new Error('Страница не найдена'));
-});
+app.use(router);
 
 app.use(errorLogger);
 app.use(errors());
