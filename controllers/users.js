@@ -27,7 +27,18 @@ const updateMe = (req, res, next) => {
         throw new NotFoundError('Нет пользователя с таким id');
       }
       res.send(user);
-    }).catch(next);
+    }).catch((err) => {
+      if (err.name === 'ValidationError') {
+        return next(new BadRequestError('Переданы неккоректные данные'));
+      }
+      if (err.name === 'CastError') {
+        return next(new BadRequestError('Некорректный id'));
+      }
+      if (err.code === 11000) {
+        return next(new ConflictError('Данный email занят другим пользователем'));
+      }
+      return next(err);
+    });
 };
 
 const login = (req, res, next) => {
