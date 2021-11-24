@@ -36,9 +36,6 @@ const options = {
 app.use('*', cors(options));
 
 app.use(requestLogger);
-
-app.use(auth);
-
 app.use(router);
 
 app.use(errorLogger);
