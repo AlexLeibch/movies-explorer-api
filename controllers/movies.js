@@ -35,19 +35,22 @@ const createMovie = (req, res, next) => {
 const deleteMovie = (req, res, next) => {
   Movie.findById(req.params.id)
     .then((movie) => {
-      if (!movie || movie.owner.toString() !== req.user._id) {
-        throw new NotFoundError('У пользователя нет фильма с таким id');
+      if (!movie) {
+        next(new NotFoundError('У пользователя нет фильма с таким id'));
+      } else if (movie.owner.toString() === req.user._id) {
+        Movie.deleteOne({ _id: movie._id })
+          .then(() => {
+            res.status(200).send({ message: 'фильм удалён' });
+          });
+      } else {
+        next(new ForbiddenError('Нельзя удалить чужой фильм'));
       }
-      Movie.deleteOne({ _id: movie._id })
-        .then(() => {
-          res.send({ message: 'фильм удалён' });
-        }).catch(next);
     }).catch((err) => {
       if (err.name === 'CastError') {
         throw new BadRequestError('Данные не прошли валидацию');
       }
-      throw new ForbiddenError('Нельзя удалить чужой фильм');
-    }).catch(next);
+      next(err);
+    });
 };
 
 const getMovies = (req, res, next) => {

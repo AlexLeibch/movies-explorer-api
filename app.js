@@ -5,12 +5,11 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cors = require('cors');
 const { errors } = require('celebrate');
-const { auth } = require('./middlewares/auth');
 const { errorLogger, requestLogger } = require('./middlewares/logger');
 const limiter = require('./middlewares/limiter');
 const router = require('./routes/index');
 
-const { PORT = 3001, DB_ADRESS = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
+const { PORT = 3001, DB_ADRESS = 'mongodb://localhost:27017/moviesdb' } = process.env;
 
 const app = express();
 app.use(limiter);

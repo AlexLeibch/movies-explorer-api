@@ -29,7 +29,7 @@ movieRouters.post('/movies', celebrate({
       }
       return helpers.message('Поле должно быть ссылкой');
     }),
-    movieId: Joi.string().required(),
+    movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
   }),
