@@ -37,9 +37,9 @@ movieRouters.post('/movies', celebrate({
 
 movieRouters.get('/movies', getMovies);
 
-movieRouters.delete('/movies/:id', celebrate({
+movieRouters.delete('/movies/:movieId', celebrate({
   params: Joi.object().keys({
-    id: Joi.string().hex(),
+    movieId: Joi.string().hex(),
   }),
 }), deleteMovie);
 

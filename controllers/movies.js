@@ -33,12 +33,12 @@ const createMovie = (req, res, next) => {
 };
 
 const deleteMovie = (req, res, next) => {
-  Movie.findById(req.params.id)
+  Movie.findById(req.params.movieId)
     .then((movie) => {
       if (!movie) {
         next(new NotFoundError('У пользователя нет фильма с таким id'));
       } else if (movie.owner.toString() === req.user._id) {
-        Movie.deleteOne({ _id: movie._id })
+        Movie.findByIdAndDelete(req.params.movieId)
           .then(() => {
             res.status(200).send({ message: 'фильм удалён' });
           });

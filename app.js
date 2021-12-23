@@ -9,7 +9,7 @@ const { errorLogger, requestLogger } = require('./middlewares/logger');
 const limiter = require('./middlewares/limiter');
 const router = require('./routes/index');
 
-const { PORT = 3001, DB_ADRESS = 'mongodb://localhost:27017/moviesdb' } = process.env;
+const { PORT = 3001, DB_ADRESS = 'mongodb://localhost:27017/bitfilmsdb' /*'mongodb://localhost:27017/moviesdb' */ } = process.env;
 
 const app = express();
 app.use(limiter);
@@ -22,6 +22,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const options = {
   origin: [
     'http://localhost:3001',
+    'https://localhost:3001',
+    'https://localhost:3000',
+    'http://localhost:3000',
     'http://api.alex.movies-explorer.nomoredomains.rocks',
     'https://api.alex.movies-explorer.nomoredomains.rocks',
   ],
