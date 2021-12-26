@@ -27,6 +27,8 @@ const options = {
     // 'http://localhost:3000',
     'http://api.alex.movies-explorer.nomoredomains.rocks',
     'https://api.alex.movies-explorer.nomoredomains.rocks',
+    'https://alex.movies-explorer.nomoredomains.rocks',
+    'http://alex.movies-explorer.nomoredomains.rocks',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
