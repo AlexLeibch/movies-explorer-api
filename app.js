@@ -23,8 +23,8 @@ const options = {
   origin: [
     // 'http://localhost:3001',
     // 'https://localhost:3001',
-    // 'https://localhost:3000',
-    // 'http://localhost:3000',
+    'https://localhost:3000',
+    'http://localhost:3000',
     'http://api.alex.movies-explorer.nomoredomains.rocks',
     'https://api.alex.movies-explorer.nomoredomains.rocks',
     'https://alex.movies-explorer.nomoredomains.rocks',
